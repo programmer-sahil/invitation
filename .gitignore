@@ -1,0 +1,78 @@
+
+# Dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# Next.js build files
+/.next/
+/out/
+/build
+/dist
+
+# Production output
+.vercel
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Testing and coverage
+/coverage
+/.nyc_output
+/playwright-report
+/test-results
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE and editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Local secrets
+*.pem
+*.key
+
+# Miscellaneous
+*.log
+
+
+# Dependencies
+node_modules/
+.next/
+
+# Vercel
+.vercel/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# macOS
+.DS_Store
+
+# Debug logs
+*.log
