@@ -4,11 +4,13 @@ import './doors.css';
 import './door-motion.css';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
+import WeddingMark from './WeddingMark';
 
 type Phase = 'welcome' | 'unlocking' | 'opening' | 'revealing' | 'completed';
 
-export default function RoyalDoorIntro({ onReveal, onComplete }: { onReveal: () => void; onComplete: () => void }) {
+export default function RoyalDoorIntro({ onReveal, onComplete, onOpen }: { onReveal: () => void; onComplete: () => void; onOpen: (withSound: boolean) => void }) {
   const [phase, setPhase] = useState<Phase>('welcome');
+  const [soundOn, setSoundOn] = useState(true);
   const reduced = useReducedMotion();
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const active = phase !== 'welcome';
@@ -18,6 +20,9 @@ export default function RoyalDoorIntro({ onReveal, onComplete }: { onReveal: () 
   useEffect(() => () => { timers.current.forEach(clearTimeout); timers.current = []; }, []);
   const begin = () => {
     if (phase !== 'welcome') return;
+    // This is intentionally called in the guest's click handler, so playback
+    // remains user initiated under browser media policies.
+    onOpen(soundOn);
     setPhase('unlocking');
     if (reduced) {
       schedule(() => { setPhase('revealing'); onReveal(); }, 180);
@@ -44,14 +49,19 @@ export default function RoyalDoorIntro({ onReveal, onComplete }: { onReveal: () 
     <motion.div className="invitation-plaque" animate={active ? { opacity: 0, y: -12, scale: .97 } : { opacity: 1, y: 0, scale: 1 }} transition={{ duration: reduced ? .1 : .48, ease: 'easeInOut' }}>
       <p className="plaque-arabic" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
       <p className="plaque-translation">In the Name of Allah, the Most Gracious, the Most Merciful</p>
-      <div className="plaque-divider"><i />✦<i /></div>
+      <div className="plaque-divider"><i /><WeddingMark/><i /></div>
       <p className="plaque-kicker">A Blessed Union</p>
       <h1>SK Sahil <em>&amp;</em> Zameema Ghousia</h1>
       <p className="plaque-family">Together with our families, we cordially invite you and your beloved family to celebrate our Walima Reception.</p>
       <p className="plaque-date">Monday, 23 November 2026 <span>·</span> 7:00 PM onwards</p>
       <p className="plaque-dua">Your presence and duas are our greatest blessings.</p>
+      <div className="sound-choice" role="group" aria-label="Background sound preference">
+        <span aria-hidden="true">♬</span><span>Background sound</span>
+        <button type="button" className={soundOn ? 'selected' : ''} aria-pressed={soundOn} onClick={() => setSoundOn(true)}>Sound On</button>
+        <button type="button" className={!soundOn ? 'selected' : ''} aria-pressed={!soundOn} onClick={() => setSoundOn(false)}>Sound Off</button>
+      </div>
       <button className="door-button" onClick={begin} disabled={phase !== 'welcome'}>Open Our Invitation <span aria-hidden="true">↗</span></button>
     </motion.div>
   </motion.section>;
 }
-function DoorPattern() { return <><span className="door-medallion">✦</span><span className="door-vine v1">❖</span><span className="door-vine v2">❖</span><span className="door-vine v3">❖</span></>; }
+function DoorPattern() { return <span className="door-medallion"><WeddingMark/></span>; }
