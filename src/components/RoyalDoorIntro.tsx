@@ -51,7 +51,7 @@ export default function RoyalDoorIntro({ onReveal, onComplete, onOpen }: { onRev
       <p className="plaque-translation">In the Name of Allah, the Most Gracious, the Most Merciful</p>
       <div className="plaque-divider"><i /><WeddingMark/><i /></div>
       <p className="plaque-kicker">A Blessed Union</p>
-      <h1>SK Sahil <em>&amp;</em> Zameema Ghousia</h1>
+      <h1>Sahil <em>&amp;</em> Zameema</h1>
       <p className="plaque-family">Together with our families, we cordially invite you and your beloved family to celebrate our Walima Reception.</p>
       <p className="plaque-date">Monday, 23 November 2026 <span>·</span> 7:00 PM onwards</p>
       <p className="plaque-dua">Your presence and duas are our greatest blessings.</p>
